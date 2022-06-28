@@ -1,0 +1,15 @@
+{
+  "nav-title": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "shop": "Shop",
+    "settings": "Settings",
+    "appareance": "Appareance",
+    "orders": "Orders",
+    "coupons": "Coupons",
+    "users": "Users",
+    "clients": "Clients",
+    "cars": "Cars"
+  }
+}

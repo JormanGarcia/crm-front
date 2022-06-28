@@ -1,0 +1,4 @@
+export enum PRODUCT_STATUS {
+    PUBLISHED = "PUBLISHED",
+    DRAFT = "DRAFT",
+}

@@ -1,0 +1,24 @@
+query GetCategories {
+  categories {
+    data {
+      slug
+      id
+      name
+      createdAt
+      icon
+      products {
+        id
+      }
+    }
+
+    count
+  }
+}
+
+mutation CreateCategory($object: CreateInputCategory!) {
+  create_category(object: $object) {
+    slug
+    id
+    name
+  }
+}

@@ -1,0 +1,27 @@
+query GetProducts(
+  $where: WhereProductArg
+  $limit: Int
+  $offset: Int
+  $orderBy: OrderProductsBy
+) {
+  products(where: $where, limit: $limit, orderBy: $orderBy, offset: $offset) {
+    data {
+      slug
+      id
+      name
+      createdAt
+      stock
+      status
+    }
+
+    count
+  }
+}
+
+mutation CreateProductOne($object: CreateProductInput!) {
+  create_product(object: $object) {
+    slug
+    id
+    name
+  }
+}

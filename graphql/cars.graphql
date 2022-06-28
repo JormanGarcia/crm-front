@@ -1,0 +1,43 @@
+query GetCars(
+  $where: WhereCarsArg
+  $limit: Int
+  $offset: Int
+  $orderBy: OrderCarsBy
+) {
+  cars(where: $where, limit: $limit, orderBy: $orderBy, offset: $offset) {
+    data {
+      id
+      position
+      condition
+      brand
+      year
+      mileage
+      price
+      images
+      model
+      comments
+      category
+      transmission
+      categories {
+        slug
+        icon
+        id
+        name
+      }
+    }
+
+    count
+  }
+}
+
+mutation CreateCar($object: CreateCarsInput!) {
+  create_car(object: $object) {
+    id
+  }
+}
+
+mutation DeleteCar($id: String!) {
+  delete_car(id: $id) {
+    id
+  }
+}

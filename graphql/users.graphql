@@ -1,0 +1,23 @@
+query GetUsers($where: WhereInputUser, $limit: Int, $offset: Int) {
+  users(where: $where, limit: $limit, offset: $offset) {
+    data {
+      id
+      name
+      website
+      email
+      role
+      password
+      comments
+      cars {
+        id
+      }
+    }
+    count
+  }
+}
+
+mutation DeleteUser($id: String!) {
+  delete_user(id: $id) {
+    id
+  }
+}

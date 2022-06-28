@@ -1,10 +1,9 @@
+import Layout from "@/components/ui/layout";
 import type { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
 import { ReactElement } from "react";
-import Layout from "../components/ui/layout";
-import { NextPageWithLayout } from "./_app";
 
-export default function Home() {
+export default function Appareance() {
   const { t } = useTranslation("common");
 
   return (
@@ -83,4 +82,6 @@ export default function Home() {
   );
 }
 
-Home.layout = Layout;
+Appareance.getLayout = (page: ReactElement) => {
+  return <Layout>{page}</Layout>;
+};
