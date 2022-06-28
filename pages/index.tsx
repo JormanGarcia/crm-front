@@ -1,86 +1,19 @@
 import type { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
+import { useRouter } from "next/router";
 import { ReactElement } from "react";
+import { ROUTES } from "utils/routes";
 import Layout from "../components/ui/layout";
 import { NextPageWithLayout } from "./_app";
 
 export default function Home() {
   const { t } = useTranslation("common");
 
-  return (
-    <div>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, optio
-        veniam in repellendus eum, atque aperiam vel temporibus, fugit maxime
-        illum dicta a fugiat non. Quaerat voluptatem, quod saepe, illum
-        voluptatibus officia laborum animi ipsa, sit temporibus eaque possimus!
-        Eveniet, eos odio, repellat sapiente facere quidem doloribus porro in
-        corporis praesentium numquam! Architecto beatae, molestiae suscipit
-        consectetur ab inventore ratione laudantium labore nihil repellendus,
-        accusantium consequuntur, voluptates aspernatur consequatur sit
-        reprehenderit harum autem quod possimus saepe aliquid sint earum? Neque
-        earum maiores placeat inventore autem pariatur ut officiis blanditiis
-        deleniti consequuntur, tenetur perferendis dignissimos eum molestiae id
-        sapiente similique voluptatum.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, optio
-        veniam in repellendus eum, atque aperiam vel temporibus, fugit maxime
-        illum dicta a fugiat non. Quaerat voluptatem, quod saepe, illum
-        voluptatibus officia laborum animi ipsa, sit temporibus eaque possimus!
-        Eveniet, eos odio, repellat sapiente facere quidem doloribus porro in
-        corporis praesentium numquam! Architecto beatae, molestiae suscipit
-        consectetur ab inventore ratione laudantium labore nihil repellendus,
-        accusantium consequuntur, voluptates aspernatur consequatur sit
-        reprehenderit harum autem quod possimus saepe aliquid sint earum? Neque
-        earum maiores placeat inventore autem pariatur ut officiis blanditiis
-        deleniti consequuntur, tenetur perferendis dignissimos eum molestiae id
-        sapiente similique voluptatum.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, optio
-        veniam in repellendus eum, atque aperiam vel temporibus, fugit maxime
-        illum dicta a fugiat non. Quaerat voluptatem, quod saepe, illum
-        voluptatibus officia laborum animi ipsa, sit temporibus eaque possimus!
-        Eveniet, eos odio, repellat sapiente facere quidem doloribus porro in
-        corporis praesentium numquam! Architecto beatae, molestiae suscipit
-        consectetur ab inventore ratione laudantium labore nihil repellendus,
-        accusantium consequuntur, voluptates aspernatur consequatur sit
-        reprehenderit harum autem quod possimus saepe aliquid sint earum? Neque
-        earum maiores placeat inventore autem pariatur ut officiis blanditiis
-        deleniti consequuntur, tenetur perferendis dignissimos eum molestiae id
-        sapiente similique voluptatum.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, optio
-        veniam in repellendus eum, atque aperiam vel temporibus, fugit maxime
-        illum dicta a fugiat non. Quaerat voluptatem, quod saepe, illum
-        voluptatibus officia laborum animi ipsa, sit temporibus eaque possimus!
-        Eveniet, eos odio, repellat sapiente facere quidem doloribus porro in
-        corporis praesentium numquam! Architecto beatae, molestiae suscipit
-        consectetur ab inventore ratione laudantium labore nihil repellendus,
-        accusantium consequuntur, voluptates aspernatur consequatur sit
-        reprehenderit harum autem quod possimus saepe aliquid sint earum? Neque
-        earum maiores placeat inventore autem pariatur ut officiis blanditiis
-        deleniti consequuntur, tenetur perferendis dignissimos eum molestiae id
-        sapiente similique voluptatum.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, optio
-        veniam in repellendus eum, atque aperiam vel temporibus, fugit maxime
-        illum dicta a fugiat non. Quaerat voluptatem, quod saepe, illum
-        voluptatibus officia laborum animi ipsa, sit temporibus eaque possimus!
-        Eveniet, eos odio, repellat sapiente facere quidem doloribus porro in
-        corporis praesentium numquam! Architecto beatae, molestiae suscipit
-        consectetur ab inventore ratione laudantium labore nihil repellendus,
-        accusantium consequuntur, voluptates aspernatur consequatur sit
-        reprehenderit harum autem quod possimus saepe aliquid sint earum? Neque
-        earum maiores placeat inventore autem pariatur ut officiis blanditiis
-        deleniti consequuntur, tenetur perferendis dignissimos eum molestiae id
-        sapiente similique voluptatum.
-      </p>
-    </div>
-  );
+  const router = useRouter();
+
+  router.push(ROUTES.CARS);
+
+  return <div></div>;
 }
 
 Home.layout = Layout;
