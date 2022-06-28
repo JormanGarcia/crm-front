@@ -9,4 +9,7 @@ module.exports = nextTranslate({
   webpack: (config, { isServer, webpack }) => {
     return config;
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 });
