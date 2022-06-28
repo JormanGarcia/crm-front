@@ -101,9 +101,9 @@ const CarsForm = forwardRef((props: Props, ref) => {
               model,
               position,
               price,
-              transmission: transmission.value,
+              transmission: (transmission as any).value,
               year,
-              category: category.value,
+              category: (category as any).value,
             },
           },
         });
