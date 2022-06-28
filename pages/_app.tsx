@@ -22,7 +22,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const client = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
+  uri: process.env.NEXT_PUBLIC_BACKEND_GRAPHQL,
   cache: new InMemoryCache(),
 });
 
