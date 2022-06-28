@@ -9,7 +9,7 @@ import { BiPlus } from "react-icons/bi";
 import { styled } from "stitches.config";
 import BackButton from "@/components/ui/back-button";
 import Typography from "@/components/ui/typography";
-import ProductForm from "@/components/products/product-form";
+import ProductForm from "@/components/cars/cars-form";
 
 const ButtonStack = styled("div", {
   display: "flex",
