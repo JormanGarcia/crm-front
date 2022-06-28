@@ -162,7 +162,7 @@ const Sidebar = () => {
         </SidebarToggleButtonContainer>
         <SidebarNav>
           {NAV_ROUTES.map((groups) => {
-            const key = useId();
+            const key = Math.random();
             return (
               <SidebarGroup key={key}>
                 {groups.map((routes) => (
@@ -182,7 +182,7 @@ const Sidebar = () => {
       <ProfileDropdown open={isOpenProfile}>
         <ProfileContainer onClick={toggleProfile}>
           <ProfileInfo>
-            <span>{user?.name}</span>
+            {user !== null && <div>{user.name}</div>}
             <span>ADMIN</span>
           </ProfileInfo>
         </ProfileContainer>

@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { NextPage } from "next";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { globalCss } from "stitches.config";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -46,18 +46,31 @@ const Noop = ({ children }: { children: ReactNode }) => <>{children}</>;
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   GlobalStyles();
   const Layout = (Component as any).layout || Noop;
+  const [showing, setShowing] = useState(false);
 
-  return (
-    <>
-      <ToastContainer theme="light" position="top-center" />
-      <AlertDialog />
-      <ApolloProvider client={client}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ApolloProvider>
-    </>
-  );
+  useEffect(() => {
+    setShowing(true);
+  }, []);
+
+  if (!showing) {
+    return null;
+  }
+
+  if (typeof window === "undefined") {
+    return <></>;
+  } else {
+    return (
+      <>
+        <ToastContainer theme="light" position="top-center" />
+        <AlertDialog />
+        <ApolloProvider client={client}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ApolloProvider>
+      </>
+    );
+  }
 }
 
 export default MyApp;
