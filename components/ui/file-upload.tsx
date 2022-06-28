@@ -111,7 +111,7 @@ const FileUpload = () => {
       </InputFileLabel>
       <ImagePreviewStack>
         {value.map((item) => (
-          <ImagePreviewContainer>
+          <ImagePreviewContainer key={Math.random()}>
             <ImagePreview src={URL.createObjectURL(item)} />
             <CloseIconContainer onClick={() => deleteImage(item.name)}>
               <CloseIcon />
