@@ -41,9 +41,7 @@ const GlobalStyles = globalCss({
   },
 });
 
-const Noop: React.FC = ({ children }: { children: ReactNode }) => (
-  <>{children}</>
-);
+const Noop = ({ children }: { children: ReactNode }) => <>{children}</>;
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   GlobalStyles();
