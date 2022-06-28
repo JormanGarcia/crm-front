@@ -10,12 +10,8 @@ export function useAuth() {
         cleanUserState()
     }
 
-    function login() {
-        setUserState({
-            email: "Jormanjgl0@gmail.com",
-            id: "1",
-            name: "Jorman Garcia"
-        })
+    function login(user: { email: string; id: string; name: string }) {
+        setUserState(user)
     }
 
     return { user, isAuth: user !== null, login, logout }

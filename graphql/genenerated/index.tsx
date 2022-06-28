@@ -97,6 +97,19 @@ export type CreateProductInput = {
   stock: Scalars['Int'];
 };
 
+export type LoginInputObject = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type LoginResult = {
+  __typename?: 'LoginResult';
+  errors: Array<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  token?: Maybe<Scalars['String']>;
+  user?: Maybe<UserData>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   create_car: Cars;
@@ -105,6 +118,8 @@ export type Mutation = {
   create_user: User;
   delete_car: Cars;
   delete_user: User;
+  login: LoginResult;
+  update_car: Cars;
 };
 
 
@@ -137,11 +152,22 @@ export type MutationDelete_UserArgs = {
   id: Scalars['String'];
 };
 
+
+export type MutationLoginArgs = {
+  object: LoginInputObject;
+};
+
+
+export type MutationUpdate_CarArgs = {
+  id: Scalars['String'];
+  object: UpdateCarInput;
+};
+
 export type OrderCarsBy = {
+  category?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  slug?: InputMaybe<Scalars['String']>;
+  position?: InputMaybe<Scalars['String']>;
 };
 
 export type OrderProductsBy = {
@@ -217,6 +243,19 @@ export type QueryUsersArgs = {
   where?: InputMaybe<WhereInputUser>;
 };
 
+export type UpdateCarInput = {
+  brand?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['String']>;
+  comments?: InputMaybe<Scalars['String']>;
+  mileage?: InputMaybe<Scalars['Int']>;
+  model?: InputMaybe<Scalars['String']>;
+  position?: InputMaybe<Scalars['Int']>;
+  price?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['String']>;
+  transmission?: InputMaybe<Scalars['String']>;
+  year?: InputMaybe<Scalars['Int']>;
+};
+
 export type User = {
   __typename?: 'User';
   cars?: Maybe<Array<Cars>>;
@@ -227,6 +266,14 @@ export type User = {
   password: Scalars['String'];
   role: Scalars['String'];
   website?: Maybe<Scalars['String']>;
+};
+
+export type UserData = {
+  __typename?: 'UserData';
+  email: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  role: Scalars['String'];
 };
 
 export type UsersPaginator = {
@@ -261,7 +308,7 @@ export type GetCarsQueryVariables = Exact<{
 }>;
 
 
-export type GetCarsQuery = { __typename?: 'Query', cars: { __typename?: 'CarsPaginator', count: number, data: Array<{ __typename?: 'Cars', id: string, position: number, condition?: string | null, brand: string, year: number, mileage: number, price: number, images?: string | null, model: string, comments: string, category?: string | null, transmission: string, categories?: Array<{ __typename?: 'Category', slug: string, icon: string, id: string, name: string }> | null }> } };
+export type GetCarsQuery = { __typename?: 'Query', cars: { __typename?: 'CarsPaginator', count: number, data: Array<{ __typename?: 'Cars', id: string, position: number, condition?: string | null, brand: string, status: string, year: number, mileage: number, price: number, images?: string | null, model: string, comments: string, category?: string | null, transmission: string, categories?: Array<{ __typename?: 'Category', slug: string, icon: string, id: string, name: string }> | null }> } };
 
 export type CreateCarMutationVariables = Exact<{
   object: CreateCarsInput;
@@ -276,6 +323,21 @@ export type DeleteCarMutationVariables = Exact<{
 
 
 export type DeleteCarMutation = { __typename?: 'Mutation', delete_car: { __typename?: 'Cars', id: string } };
+
+export type GetCarByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetCarByIdQuery = { __typename?: 'Query', car: { __typename?: 'Cars', id: string, position: number, condition?: string | null, brand: string, status: string, year: number, mileage: number, price: number, images?: string | null, model: string, comments: string, category?: string | null, transmission: string } };
+
+export type UpdateCarMutationVariables = Exact<{
+  id: Scalars['String'];
+  object: UpdateCarInput;
+}>;
+
+
+export type UpdateCarMutation = { __typename?: 'Mutation', update_car: { __typename?: 'Cars', id: string } };
 
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -322,6 +384,13 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'Mutation', delete_user: { __typename?: 'User', id: string } };
 
+export type LoginMutationVariables = Exact<{
+  object: LoginInputObject;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResult', errors: Array<string>, ok: boolean, token?: string | null, user?: { __typename?: 'UserData', name: string, role: string, email: string, id: string } | null } };
+
 
 export const GetCarsDocument = gql`
     query GetCars($where: WhereCarsArg, $limit: Int, $offset: Int, $orderBy: OrderCarsBy) {
@@ -331,6 +400,7 @@ export const GetCarsDocument = gql`
       position
       condition
       brand
+      status
       year
       mileage
       price
@@ -447,6 +517,87 @@ export function useDeleteCarMutation(baseOptions?: Apollo.MutationHookOptions<De
 export type DeleteCarMutationHookResult = ReturnType<typeof useDeleteCarMutation>;
 export type DeleteCarMutationResult = Apollo.MutationResult<DeleteCarMutation>;
 export type DeleteCarMutationOptions = Apollo.BaseMutationOptions<DeleteCarMutation, DeleteCarMutationVariables>;
+export const GetCarByIdDocument = gql`
+    query GetCarById($id: String) {
+  car(where: {id: $id}) {
+    id
+    position
+    condition
+    brand
+    status
+    year
+    mileage
+    price
+    images
+    model
+    comments
+    category
+    transmission
+  }
+}
+    `;
+
+/**
+ * __useGetCarByIdQuery__
+ *
+ * To run a query within a React component, call `useGetCarByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCarByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCarByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCarByIdQuery(baseOptions?: Apollo.QueryHookOptions<GetCarByIdQuery, GetCarByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCarByIdQuery, GetCarByIdQueryVariables>(GetCarByIdDocument, options);
+      }
+export function useGetCarByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCarByIdQuery, GetCarByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCarByIdQuery, GetCarByIdQueryVariables>(GetCarByIdDocument, options);
+        }
+export type GetCarByIdQueryHookResult = ReturnType<typeof useGetCarByIdQuery>;
+export type GetCarByIdLazyQueryHookResult = ReturnType<typeof useGetCarByIdLazyQuery>;
+export type GetCarByIdQueryResult = Apollo.QueryResult<GetCarByIdQuery, GetCarByIdQueryVariables>;
+export const UpdateCarDocument = gql`
+    mutation UpdateCar($id: String!, $object: UpdateCarInput!) {
+  update_car(object: $object, id: $id) {
+    id
+  }
+}
+    `;
+export type UpdateCarMutationFn = Apollo.MutationFunction<UpdateCarMutation, UpdateCarMutationVariables>;
+
+/**
+ * __useUpdateCarMutation__
+ *
+ * To run a mutation, you first call `useUpdateCarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCarMutation, { data, loading, error }] = useUpdateCarMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useUpdateCarMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCarMutation, UpdateCarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCarMutation, UpdateCarMutationVariables>(UpdateCarDocument, options);
+      }
+export type UpdateCarMutationHookResult = ReturnType<typeof useUpdateCarMutation>;
+export type UpdateCarMutationResult = Apollo.MutationResult<UpdateCarMutation>;
+export type UpdateCarMutationOptions = Apollo.BaseMutationOptions<UpdateCarMutation, UpdateCarMutationVariables>;
 export const GetCategoriesDocument = gql`
     query GetCategories {
   categories {
@@ -689,3 +840,44 @@ export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
+export const LoginDocument = gql`
+    mutation Login($object: LoginInputObject!) {
+  login(object: $object) {
+    errors
+    ok
+    token
+    user {
+      name
+      role
+      email
+      id
+    }
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;

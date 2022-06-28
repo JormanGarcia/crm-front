@@ -68,4 +68,4 @@ const SETTINGS_ROUTES: RouteGroup[] = [
   },
 ];
 
-export const NAV_ROUTES = [HOME_ROUTES, CRUD_ROUTES];
+export const NAV_ROUTES = [CRUD_ROUTES];

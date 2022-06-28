@@ -35,7 +35,7 @@ const CurrentPage = styled(TotalItems, {
 
 const PaginatorButtons = styled("div", {
   display: "flex",
-  gap: 16,
+  gap: 12,
 });
 const PaginatorButton = styled("button", {
   border: "none",
@@ -92,19 +92,19 @@ const TableFooter = (props: Props) => {
 
   return (
     <StyledFooter>
-      <TotalItems>{totalItems} items</TotalItems>
+      <TotalItems>{totalItems} resultados</TotalItems>
 
       <PaginatorContainer>
         <CurrentPage>
-          Page {current} - {totalPages}
+          Pagina {current} - {totalPages}
         </CurrentPage>
 
         <PaginatorButtons>
           <PaginatorButton disabled={current === 1} onClick={onPrevHandler}>
-            Prev
+            Anterior
           </PaginatorButton>
           <PaginatorButton disabled={isLastPage} onClick={onNextHandler}>
-            Next
+            Siguiente
           </PaginatorButton>
         </PaginatorButtons>
       </PaginatorContainer>

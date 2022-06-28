@@ -21,3 +21,17 @@ mutation DeleteUser($id: String!) {
     id
   }
 }
+
+mutation Login($object: LoginInputObject!) {
+  login(object: $object) {
+    errors
+    ok
+    token
+    user {
+      name
+      role
+      email
+      id
+    }
+  }
+}

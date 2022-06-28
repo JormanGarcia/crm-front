@@ -35,6 +35,7 @@ const TableRowCell = styled("td", {
   color: "$text500",
   fontSize: "$sm",
   textAlign: "left",
+  whiteSpace: "nowrap",
 });
 
 export const TableHeaderCell = styled("th", {

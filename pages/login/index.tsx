@@ -7,8 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Stack } from "@/components/ui/stack";
 import Typography from "@/components/ui/typography";
 import { useFormik } from "formik";
+import { useLoginMutation } from "graphql/genenerated";
 import { useRouter } from "next/router";
 import React from "react";
+import { toast, useToast } from "react-toastify";
 import { styled } from "stitches.config";
 import { useAuth } from "utils/hooks/use-auth";
 import { ROUTES } from "utils/routes";
@@ -25,15 +27,38 @@ const Login = () => {
   const { login } = useAuth();
   const router = useRouter();
 
+  const [signIn, {}] = useLoginMutation();
+
   const { getFieldProps, handleSubmit } = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    onSubmit(values) {
-      login();
+    async onSubmit(values) {
+      const { data } = await signIn({
+        variables: {
+          object: values,
+        },
+      });
+      console.log(data, values);
 
-      router.push(ROUTES.HOME);
+      if (data.login.errors.includes("WRONG_EMAIL")) {
+        toast("El email ingresado no existe", {
+          type: "error",
+        });
+        return;
+      }
+
+      if (data.login.errors.includes("WRONG_PASSWORD")) {
+        toast("Contraseña incorrecta", {
+          type: "error",
+        });
+        return;
+      }
+
+      login(data.login.user);
+
+      router.push(ROUTES.CARS);
     },
   });
 

@@ -15,6 +15,36 @@ import { ROUTES } from "utils/routes";
 import { useAlertDialog } from "utils/hooks/use-alert-dialog";
 import TableFilters from "../ui/table-filters";
 import { GetCarsDocument, useDeleteCarMutation } from "graphql/genenerated";
+import { CAR_STATUS } from "types/car-status";
+import { CAR_CATEGORIES } from "types/car-categories";
+
+function parseStatus(status: CAR_STATUS) {
+  switch (status) {
+    case CAR_STATUS.ON_SALE:
+      return "En venta";
+    case CAR_STATUS.SELLED:
+      return "Vendido";
+    default:
+      return "";
+  }
+}
+
+function parseCategory(status: CAR_CATEGORIES) {
+  switch (status) {
+    case CAR_CATEGORIES.SUV:
+      return "Suv";
+    case CAR_CATEGORIES.SEDAN:
+      return "Sedan";
+    case CAR_CATEGORIES.MOTO:
+      return "Moto";
+    case CAR_CATEGORIES.PICK_UP:
+      return "Pick Up";
+    case CAR_CATEGORIES.OTHERS:
+      return "Otros";
+    default:
+      return "";
+  }
+}
 
 const ProductTable = (props: DataTableProps) => {
   const { data, refetch, count, refetching } = props;
@@ -37,7 +67,8 @@ const ProductTable = (props: DataTableProps) => {
 
       {
         Header: "Estado",
-        accessor: "condition",
+        accessor: "status",
+        Cell: ({ cell: { value } }) => <>{parseStatus(value)}</>,
       },
       {
         Header: "Marca",
@@ -45,6 +76,7 @@ const ProductTable = (props: DataTableProps) => {
       },
       {
         Header: "Categoria",
+        Cell: ({ cell: { value } }) => <>{parseCategory(value)}</>,
         accessor: "category",
       },
       {
@@ -91,7 +123,7 @@ const ProductTable = (props: DataTableProps) => {
                 },
               })
             }
-            editUrl={ROUTES.CARS + "/edit"}
+            editUrl={ROUTES.CARS + `/${row.original.id}/edit`}
           />
         ),
       },

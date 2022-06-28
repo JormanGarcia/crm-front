@@ -12,11 +12,23 @@ import Typography from "@/components/ui/typography";
 import CarsForm from "@/components/cars/cars-form";
 import FormContainer from "@/components/ui/form-container";
 import { ROUTES } from "utils/routes";
+import { useRouter } from "next/router";
+import { useGetCarByIdQuery } from "graphql/genenerated";
 
-export default function CreateCar() {
+export default function EditCar() {
   const { t } = useTranslation("common");
 
   const ref = useRef<any>(null)!;
+
+  const router = useRouter();
+
+  const { data } = useGetCarByIdQuery({
+    variables: {
+      id: router.query.id as string,
+    },
+  });
+
+  if (!data) return "Loading...";
 
   return (
     <>
@@ -25,19 +37,19 @@ export default function CreateCar() {
 
         <Button withIcon onClick={() => ref!.current!.submit()}>
           <BiPlus />
-          Crear
+          Guardar
         </Button>
       </PageHeader>
 
       <FormContainer>
         <Typography size={"2xl"} weight="bold">
-          Crear Automovil
+          Editar Automovil
         </Typography>
 
-        <CarsForm ref={ref} />
+        <CarsForm ref={ref} initialValues={data.car} />
       </FormContainer>
     </>
   );
 }
 
-CreateCar.layout = Layout;
+EditCar.layout = Layout;

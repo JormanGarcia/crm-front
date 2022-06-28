@@ -17,7 +17,7 @@ export default function Products() {
     variables: {
       limit: 10,
       orderBy: {
-        createdAt: "DESC",
+        position: "ASC",
       },
       offset: 0,
     },
@@ -25,6 +25,7 @@ export default function Products() {
     onError(error) {
       console.log(error);
     },
+    fetchPolicy: "no-cache",
   });
 
   console.log(data);

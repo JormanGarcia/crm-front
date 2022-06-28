@@ -130,6 +130,7 @@ const ProfileInfo = styled("div", {
   display: "flex",
   flexDirection: "column",
   padding: 16,
+  gap: 4,
 });
 const ProfileItem = styled("div", {
   display: "flex",
@@ -146,18 +147,31 @@ const ProfileItem = styled("div", {
   },
 });
 
+const ProfileRole = styled("div", {
+  fontSize: "$sm",
+});
+
 const Sidebar = () => {
   const { t } = useTranslation("common");
   const { isOpen, toggle } = useDisclousure(true);
-  const { isOpen: isOpenProfile, toggle: toggleProfile } =
-    useDisclousure(false);
+  const {
+    isOpen: isOpenProfile,
+    toggle: toggleProfile,
+    close: closeProfile,
+  } = useDisclousure(false);
 
   const { user, logout } = useAuth();
 
   return (
     <Container open={isOpen}>
       <ContainerHidden>
-        <SidebarToggleButtonContainer open={isOpen} onClick={toggle}>
+        <SidebarToggleButtonContainer
+          open={isOpen}
+          onClick={() => {
+            closeProfile();
+            toggle();
+          }}
+        >
           <BiChevronLeft />
         </SidebarToggleButtonContainer>
         <SidebarNav>
@@ -183,7 +197,7 @@ const Sidebar = () => {
         <ProfileContainer onClick={toggleProfile}>
           <ProfileInfo>
             {user !== null && <div>{user.name}</div>}
-            <span>ADMIN</span>
+            <ProfileRole>admin</ProfileRole>
           </ProfileInfo>
         </ProfileContainer>
 

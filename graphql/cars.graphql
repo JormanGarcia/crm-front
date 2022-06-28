@@ -10,6 +10,7 @@ query GetCars(
       position
       condition
       brand
+      status
       year
       mileage
       price
@@ -38,6 +39,30 @@ mutation CreateCar($object: CreateCarsInput!) {
 
 mutation DeleteCar($id: String!) {
   delete_car(id: $id) {
+    id
+  }
+}
+
+query GetCarById($id: String) {
+  car(where: { id: $id }) {
+    id
+    position
+    condition
+    brand
+    status
+    year
+    mileage
+    price
+    images
+    model
+    comments
+    category
+    transmission
+  }
+}
+
+mutation UpdateCar($id: String!, $object: UpdateCarInput!) {
+  update_car(object: $object, id: $id) {
     id
   }
 }

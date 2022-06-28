@@ -62,7 +62,7 @@ function TableFilters({
     <TableFilterRow>
       <Filters>
         <InputContainer css={{ width: 230 }}>
-          <Input placeholder="Search..." />
+          <Input placeholder="Buscar..." />
           <InputIcon as={BiSearch} />
         </InputContainer>
 
