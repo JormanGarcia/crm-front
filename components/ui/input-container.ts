@@ -14,6 +14,18 @@ const InputContainer = styled("div", {
     "&:focus-within": {
         border: "1px solid $main500",
         outline: "3px solid #BCBBFF"
+    },
+
+    variants: {
+        error: {
+            true: {
+                border: "1px solid $red500",
+            },
+            false: {
+                border: "1px solid $gray400",
+
+            }
+        }
     }
 })
 

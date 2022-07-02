@@ -14,7 +14,11 @@ query GetCars(
       year
       mileage
       price
-      images
+      attachments {
+        id
+        original
+        thumbnail
+      }
       model
       comments
       category
@@ -53,11 +57,15 @@ query GetCarById($id: String) {
     year
     mileage
     price
-    images
     model
     comments
     category
     transmission
+    attachments {
+      id
+      original
+      thumbnail
+    }
   }
 }
 

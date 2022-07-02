@@ -2,7 +2,7 @@ import React from "react";
 import { styled, theme } from "stitches.config";
 import SelectComponent, { Props } from "react-select";
 
-const Select = (props: Omit<Props, "styles">) => {
+const Select = (props: Omit<Props, "styles"> & { error?: boolean }) => {
   return (
     <SelectComponent
       {...props}
@@ -10,12 +10,15 @@ const Select = (props: Omit<Props, "styles">) => {
       isClearable={props.isClearable ? props.isClearable : false}
       styles={{
         control: () => ({
-          border: "1px solid " + theme.colors.gray400.value,
+          border: props.error
+            ? `1px solid ${theme.colors.red500.value}`
+            : `1px solid ${theme.colors.gray400.value}`,
           display: "flex",
           borderRadius: 4,
           alignItems: "center",
           maxHeight: 35,
           minWidth: 120,
+          background: "white",
         }),
 
         singleValue: () => ({

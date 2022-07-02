@@ -4,7 +4,7 @@ import Button from "@/components/ui/button";
 import Layout from "@/components/ui/layout";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
-import React, { ReactElement, useRef } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { styled } from "stitches.config";
 import BackButton from "@/components/ui/back-button";
@@ -15,6 +15,7 @@ import { ROUTES } from "utils/routes";
 
 export default function CreateCar() {
   const { t } = useTranslation("common");
+  const [loading, setLoading] = useState(false);
 
   const ref = useRef<any>(null)!;
 
@@ -23,9 +24,13 @@ export default function CreateCar() {
       <PageHeader>
         <BackButton href={ROUTES.CARS}>{t("nav-title.cars")}</BackButton>
 
-        <Button withIcon onClick={() => ref!.current!.submit()}>
+        <Button
+          withIcon
+          onClick={() => ref!.current!.submit()}
+          variant="primary"
+        >
           <BiPlus />
-          Crear
+          {loading ? "Creando..." : "Crear"}
         </Button>
       </PageHeader>
 
@@ -34,7 +39,7 @@ export default function CreateCar() {
           Crear Automovil
         </Typography>
 
-        <CarsForm ref={ref} />
+        <CarsForm ref={ref} setLoading={setLoading} />
       </FormContainer>
     </>
   );

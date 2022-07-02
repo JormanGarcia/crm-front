@@ -16,7 +16,7 @@ const LoadingSpinner = styled("div", {
     height: 50,
     borderRadius: "100%",
     borderBottomColor: "transparent",
-    animation: `1s ${SpinnerAnimation} infinite linear`
+    animation: `1s ${SpinnerAnimation} infinite linear`,
 
 
 

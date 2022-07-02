@@ -3,10 +3,6 @@ import ProductTableFilters from "./product-table-filters";
 import { Column, useTable } from "react-table";
 import Table from "../ui/table";
 import TableFooter from "../ui/table-footer";
-import IconButton from "../ui/icon-button";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
-import Badge from "../ui/badge";
-import dayjs from "dayjs";
 import { TableContainer } from "../ui/table-container";
 import { PRODUCT_STATUS } from "types/product-status";
 import { DataTableProps, TableColumnsType } from "types/commons";
@@ -17,6 +13,10 @@ import TableFilters from "../ui/table-filters";
 import { GetCarsDocument, useDeleteCarMutation } from "graphql/genenerated";
 import { CAR_STATUS } from "types/car-status";
 import { CAR_CATEGORIES } from "types/car-categories";
+import { moneyFormatter } from "utils/money-formatter";
+import { styled } from "stitches.config";
+import { SlideShow } from "../ui/slide-show";
+import useDisclousure from "utils/hooks/use-disclousure";
 
 function parseStatus(status: CAR_STATUS) {
   switch (status) {
@@ -45,6 +45,20 @@ function parseCategory(status: CAR_CATEGORIES) {
       return "";
   }
 }
+
+const PreviewImage = styled("img", {
+  width: 60,
+  height: 40,
+  objectFit: "cover",
+  border: "1px solid $gray200",
+  borderRadius: 2,
+});
+
+const PreviewImageContainer = styled("div", {
+  padding: -20,
+  display: "flex",
+  alignItems: "center",
+});
 
 const ProductTable = (props: DataTableProps) => {
   const { data, refetch, count, refetching } = props;
@@ -98,6 +112,7 @@ const ProductTable = (props: DataTableProps) => {
       {
         Header: "Precio",
         accessor: "price",
+        Cell: ({ cell: { value } }) => <>{moneyFormatter.format(value)}</>,
       },
       {
         Header: "Comentarios",
@@ -105,7 +120,18 @@ const ProductTable = (props: DataTableProps) => {
       },
       {
         Header: "Fotos/Videos",
-        accessor: "attathcments",
+        accessor: "attachments",
+        Cell: ({ cell: { value } }) => {
+          const { close, isOpen: slideShowOpen, open } = useDisclousure(false);
+          if (value.length === 0) return null;
+          return (
+            <>
+              <PreviewImageContainer onClick={open}>
+                <PreviewImage src={value[0].thumbnail} />
+              </PreviewImageContainer>
+            </>
+          );
+        },
       },
       {
         Header: () => <div style={{ textAlign: "right" }}>Acciones</div>,

@@ -17,8 +17,18 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type Attachment = {
+  __typename?: 'Attachment';
+  height?: Maybe<Scalars['Float']>;
+  id: Scalars['String'];
+  original: Scalars['String'];
+  thumbnail: Scalars['String'];
+  width?: Maybe<Scalars['Float']>;
+};
+
 export type Cars = {
   __typename?: 'Cars';
+  attachments?: Maybe<Array<Attachment>>;
   brand: Scalars['String'];
   categories?: Maybe<Array<Category>>;
   category?: Maybe<Scalars['String']>;
@@ -26,7 +36,6 @@ export type Cars = {
   condition?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
-  images?: Maybe<Scalars['String']>;
   mileage: Scalars['Int'];
   model: Scalars['String'];
   position: Scalars['Float'];
@@ -61,6 +70,7 @@ export type Category = {
 };
 
 export type CreateCarsInput = {
+  attachments?: InputMaybe<Array<Scalars['String']>>;
   brand: Scalars['String'];
   category: Scalars['String'];
   comments?: InputMaybe<Scalars['String']>;
@@ -84,6 +94,7 @@ export type CreateInputUser = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+  role?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
 };
 
@@ -244,16 +255,17 @@ export type QueryUsersArgs = {
 };
 
 export type UpdateCarInput = {
-  brand?: InputMaybe<Scalars['String']>;
-  category?: InputMaybe<Scalars['String']>;
+  attachments?: InputMaybe<Array<Scalars['String']>>;
+  brand: Scalars['String'];
+  category: Scalars['String'];
   comments?: InputMaybe<Scalars['String']>;
-  mileage?: InputMaybe<Scalars['Int']>;
-  model?: InputMaybe<Scalars['String']>;
-  position?: InputMaybe<Scalars['Int']>;
-  price?: InputMaybe<Scalars['Float']>;
-  status?: InputMaybe<Scalars['String']>;
-  transmission?: InputMaybe<Scalars['String']>;
-  year?: InputMaybe<Scalars['Int']>;
+  mileage: Scalars['Int'];
+  model: Scalars['String'];
+  position: Scalars['Int'];
+  price: Scalars['Float'];
+  status: Scalars['String'];
+  transmission: Scalars['String'];
+  year: Scalars['Int'];
 };
 
 export type User = {
@@ -283,10 +295,18 @@ export type UsersPaginator = {
 };
 
 export type WhereCarsArg = {
+  brand?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
+  maxPrice?: InputMaybe<Scalars['Int']>;
+  maxYear?: InputMaybe<Scalars['Int']>;
+  minPrice?: InputMaybe<Scalars['Int']>;
+  minYear?: InputMaybe<Scalars['Int']>;
+  model?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   slug?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['String']>;
+  transmission?: InputMaybe<Scalars['String']>;
 };
 
 export type WhereInputUser = {
@@ -308,7 +328,7 @@ export type GetCarsQueryVariables = Exact<{
 }>;
 
 
-export type GetCarsQuery = { __typename?: 'Query', cars: { __typename?: 'CarsPaginator', count: number, data: Array<{ __typename?: 'Cars', id: string, position: number, condition?: string | null, brand: string, status: string, year: number, mileage: number, price: number, images?: string | null, model: string, comments: string, category?: string | null, transmission: string, categories?: Array<{ __typename?: 'Category', slug: string, icon: string, id: string, name: string }> | null }> } };
+export type GetCarsQuery = { __typename?: 'Query', cars: { __typename?: 'CarsPaginator', count: number, data: Array<{ __typename?: 'Cars', id: string, position: number, condition?: string | null, brand: string, status: string, year: number, mileage: number, price: number, model: string, comments: string, category?: string | null, transmission: string, attachments?: Array<{ __typename?: 'Attachment', id: string, original: string, thumbnail: string }> | null, categories?: Array<{ __typename?: 'Category', slug: string, icon: string, id: string, name: string }> | null }> } };
 
 export type CreateCarMutationVariables = Exact<{
   object: CreateCarsInput;
@@ -329,7 +349,7 @@ export type GetCarByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetCarByIdQuery = { __typename?: 'Query', car: { __typename?: 'Cars', id: string, position: number, condition?: string | null, brand: string, status: string, year: number, mileage: number, price: number, images?: string | null, model: string, comments: string, category?: string | null, transmission: string } };
+export type GetCarByIdQuery = { __typename?: 'Query', car: { __typename?: 'Cars', id: string, position: number, condition?: string | null, brand: string, status: string, year: number, mileage: number, price: number, model: string, comments: string, category?: string | null, transmission: string, attachments?: Array<{ __typename?: 'Attachment', id: string, original: string, thumbnail: string }> | null } };
 
 export type UpdateCarMutationVariables = Exact<{
   id: Scalars['String'];
@@ -404,7 +424,11 @@ export const GetCarsDocument = gql`
       year
       mileage
       price
-      images
+      attachments {
+        id
+        original
+        thumbnail
+      }
       model
       comments
       category
@@ -528,11 +552,15 @@ export const GetCarByIdDocument = gql`
     year
     mileage
     price
-    images
     model
     comments
     category
     transmission
+    attachments {
+      id
+      original
+      thumbnail
+    }
   }
 }
     `;

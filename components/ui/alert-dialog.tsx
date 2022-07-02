@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled, keyframes } from "@stitches/react";
 import { violet, blackA, red, mauve } from "@radix-ui/colors";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
@@ -91,12 +91,18 @@ interface Props {
 const AlertDialog = () => {
   const { close, isOpen, description, title, onConfirm } = useAlertDialog({});
 
+  const [loading, setLoading] = useState(false);
+
   async function onConfirmAction() {
+    setLoading(true);
+
     if (onConfirm) {
       await onConfirm();
     }
 
     close();
+
+    setLoading(false);
   }
 
   return (
@@ -115,7 +121,7 @@ const AlertDialog = () => {
 
           <AlertDialogAction asChild>
             <Button variant="primary" onClick={() => onConfirmAction()}>
-              {"Borrar"}
+              {!loading ? "Borrar" : "Cargando..."}
             </Button>
           </AlertDialogAction>
         </Flex>

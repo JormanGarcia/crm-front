@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import AlertDialog from "@/components/ui/alert-dialog";
+import { ENV_VARIABLES } from "utils/config";
 dayjs.extend(customParseFormat);
 dayjs.extend(relativeTime);
 
@@ -22,7 +23,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const client = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_BACKEND_GRAPHQL,
+  uri: ENV_VARIABLES.BACKEND_GRAPHQL,
   cache: new InMemoryCache(),
 });
 
