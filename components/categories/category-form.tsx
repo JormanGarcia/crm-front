@@ -175,7 +175,6 @@ const CategoryForm = forwardRef((props, ref) => {
 
       <Fieldset>
         <Label>Preview images</Label>
-        <FileUpload />
       </Fieldset>
 
       <Fieldset>
