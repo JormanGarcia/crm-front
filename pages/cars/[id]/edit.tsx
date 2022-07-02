@@ -14,6 +14,7 @@ import FormContainer from "@/components/ui/form-container";
 import { ROUTES } from "utils/routes";
 import { useRouter } from "next/router";
 import { useGetCarByIdQuery } from "graphql/genenerated";
+import lodash from "lodash";
 
 export default function EditCar() {
   const { t } = useTranslation("common");
@@ -47,7 +48,22 @@ export default function EditCar() {
           Editar Automovil
         </Typography>
 
-        <CarsForm ref={ref} initialValues={data.car} setLoading={setLoading} />
+        <CarsForm
+          ref={ref}
+          initialValues={{
+            attachments: data.car.attachments,
+            brand: data.car.brand,
+            category: data.car.category,
+            mileage: data.car.mileage,
+            model: data.car.model,
+            position: data.car.position,
+            price: data.car.price,
+            status: data.car.status,
+            transmission: data.car.transmission,
+            year: data.car.year,
+          }}
+          setLoading={setLoading}
+        />
       </FormContainer>
     </>
   );
