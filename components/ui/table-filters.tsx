@@ -61,11 +61,7 @@ function TableFilters({
   return (
     <TableFilterRow>
       <Filters>
-        <InputContainer css={{ width: 230 }}>
-          <Input placeholder="Buscar..." />
-          <InputIcon as={BiSearch} />
-        </InputContainer>
-
+        <Input placeholder="Buscar..." rightIcon={BiSearch} />
         {extraFilters && extraFilters}
       </Filters>
 

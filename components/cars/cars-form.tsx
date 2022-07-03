@@ -55,7 +55,7 @@ const initialValues = {
   brand: "",
   model: "",
   price: 0,
-  year: SELECT_YEAR_OPTIONS[0],
+  year: undefined,
   mileage: 0,
   transmission: "",
   category: "",
@@ -68,15 +68,17 @@ interface Props {
 }
 
 const formSchema = Yup.object().shape({
-  position: Yup.number().min(1).required(),
+  position: Yup.number()
+    .min(1, "La posicion del automovil debe de ser mayor a 0.")
+    .required(),
   status: Yup.object().required(),
-  brand: Yup.string().required(),
-  model: Yup.string().required(),
-  price: Yup.number().min(1).required(),
-  year: Yup.object().required(),
-  mileage: Yup.number().min(1).required(),
-  transmission: Yup.object().required(),
-  category: Yup.object().required(),
+  brand: Yup.string().required("Este campo es obligatorio."),
+  model: Yup.string().required("Este campo es obligatorio."),
+  price: Yup.number().min(1, "Precio debe ser mayor a 1").required(),
+  year: Yup.object().required("Este campo es obligatorio."),
+  mileage: Yup.number().min(0).required("Este campo es obligatorio."),
+  transmission: Yup.object().required("Este campo es obligatorio."),
+  category: Yup.object().required("Este campo es obligatorio."),
 });
 
 const CarsForm = forwardRef((props: Props, ref) => {
@@ -128,6 +130,8 @@ const CarsForm = forwardRef((props: Props, ref) => {
     setFieldValue,
     errors,
     touched,
+    handleBlur,
+    setFieldTouched,
   } = useFormik({
     initialValues: props.initialValues
       ? {
@@ -221,86 +225,98 @@ const CarsForm = forwardRef((props: Props, ref) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Stack css={{ gap: 20 }} direction={"vertical"}>
-        <Fieldset>
-          <Label required>Posicion</Label>
-          <InputContainer error={Boolean(errors.position && touched.position)}>
-            <Input {...getFieldProps("position")} type={"number"} />
-          </InputContainer>
-        </Fieldset>
-        <Stack css={{ gap: 16 }}>
-          <Fieldset>
-            <Label required>Marca</Label>
-            <InputContainer error={Boolean(errors.brand && touched.brand)}>
-              <Input {...getFieldProps("brand")} />
-            </InputContainer>
-          </Fieldset>
+        <Input
+          label="Posicion"
+          required
+          {...getFieldProps("position")}
+          hasError={Boolean(errors.position && touched.position)}
+          type={"number"}
+          error={errors.position}
+        />
+        <Stack css={{ gap: 16, alignItems: "start" }}>
+          <Input
+            label="Marca"
+            required
+            {...getFieldProps("brand")}
+            hasError={Boolean(errors.brand && touched.brand)}
+            error={errors.brand}
+          />
 
-          <Fieldset>
-            <Label required>Modelo</Label>
-            <InputContainer error={Boolean(errors.model && touched.model)}>
-              <Input {...getFieldProps("model")} />
-            </InputContainer>
-          </Fieldset>
+          <Input
+            label="Modelo"
+            required
+            {...getFieldProps("model")}
+            hasError={Boolean(errors.model && touched.model)}
+            error={errors.model}
+          />
         </Stack>
 
-        <Fieldset>
-          <Label required>Precio (CLP)</Label>
-          <InputContainer error={Boolean(errors.price && touched.price)}>
-            <Input {...getFieldProps("price")} type="number" />
-          </InputContainer>
-        </Fieldset>
-        <Fieldset>
-          <Label required>Categoria</Label>
+        <Input
+          label="Precio (CLP)"
+          required
+          {...getFieldProps("price")}
+          hasError={Boolean(errors.price && touched.price)}
+          error={errors.price}
+          type="number"
+        />
 
-          <Select
-            value={values.category}
-            onChange={(e) => setFieldValue("category", e)}
-            options={SELECT_CATEGORIES_OPTIONS}
-            error={!!errors.category}
-          />
-        </Fieldset>
+        <Select
+          value={values.category}
+          options={SELECT_CATEGORIES_OPTIONS}
+          onChange={(e) => setFieldValue("category", e)}
+          onBlur={() => setFieldTouched("category")}
+          hasError={Boolean(errors.category && touched.category)}
+          error={errors.category as string}
+          label="Categoria"
+          required
+        />
+
         <Fieldset>
           <Label>Imagenes</Label>
           <FileUpload value={files} setValue={setFiles} />
         </Fieldset>
         <Stack css={{ gap: 16 }}>
-          <Fieldset>
-            <Label required>Estado</Label>
-
-            <Select
-              value={values.status}
-              onChange={(e) => setFieldValue("status", e)}
-              options={SELECT_CAR_STATUS_OPTIONS}
-              error={!!errors.status}
-            />
-          </Fieldset>
-          <Fieldset>
-            <Label required>Año</Label>
-
-            <Select
-              value={values.year}
-              onChange={(e) => setFieldValue("year", e)}
-              options={SELECT_YEAR_OPTIONS}
-              error={!!errors.year}
-            />
-          </Fieldset>
-        </Stack>
-        <Fieldset>
-          <Label required>Kilometraje</Label>
-          <InputContainer error={Boolean(errors.mileage && touched.mileage)}>
-            <Input {...getFieldProps("mileage")} type="number" />
-          </InputContainer>
-        </Fieldset>
-        <Fieldset>
-          <Label required>Transmicion</Label>
+          <Select
+            value={values.status}
+            options={SELECT_CAR_STATUS_OPTIONS}
+            onChange={(e) => setFieldValue("status", e)}
+            onBlur={() => setFieldTouched("status")}
+            hasError={Boolean(errors.status && touched.status)}
+            error={errors.status as string}
+            label="Status"
+            required
+          />
 
           <Select
-            error={!!errors.transmission}
-            value={values.transmission}
-            onChange={(e) => setFieldValue("transmission", e)}
-            options={SELECT_TRANSMISSIONS_OPTIONS}
+            value={values.year}
+            onChange={(e) => setFieldValue("year", e)}
+            onBlur={() => setFieldTouched("year")}
+            options={SELECT_YEAR_OPTIONS}
+            hasError={Boolean(errors.year && touched.year)}
+            error={errors.year as string}
+            label="Año"
+            required
           />
-        </Fieldset>
+        </Stack>
+        <Input
+          label="Kilometraje"
+          required
+          {...getFieldProps("mileage")}
+          hasError={Boolean(errors.mileage && touched.mileage)}
+          error={errors.mileage}
+          type="number"
+        />
+
+        <Select
+          value={values.transmission}
+          onChange={(e) => setFieldValue("transmission", e)}
+          options={SELECT_TRANSMISSIONS_OPTIONS}
+          onBlur={() => setFieldTouched("transmission")}
+          hasError={Boolean(errors.transmission && touched.transmission)}
+          error={errors.transmission as string}
+          label="Transmission"
+          required
+        />
       </Stack>
     </Form>
   );

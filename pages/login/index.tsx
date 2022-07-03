@@ -9,7 +9,8 @@ import Typography from "@/components/ui/typography";
 import { useFormik } from "formik";
 import { useLoginMutation } from "graphql/genenerated";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
+import { BiCloset } from "react-icons/bi";
 import { toast, useToast } from "react-toastify";
 import { styled } from "stitches.config";
 import { useAuth } from "utils/hooks/use-auth";
@@ -24,10 +25,16 @@ const LoginContainer = styled("div", {
 });
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, isAuth } = useAuth();
   const router = useRouter();
 
-  const [signIn, {}] = useLoginMutation();
+  useEffect(() => {
+    if (isAuth) {
+      router.push(ROUTES.CARS);
+    }
+  }, [isAuth]);
+
+  const [signIn, { loading }] = useLoginMutation();
 
   const { getFieldProps, handleSubmit } = useFormik({
     initialValues: {
@@ -76,22 +83,17 @@ const Login = () => {
           </Typography>
 
           <Stack css={{ gap: 20, width: 300 }} direction={"vertical"}>
-            <Fieldset>
-              <Label>Correo</Label>
-              <InputContainer>
-                <Input {...getFieldProps("email")} />
-              </InputContainer>
-            </Fieldset>
-            <Fieldset>
-              <Label>Contraseña</Label>
-              <InputContainer>
-                <Input {...getFieldProps("password")} />
-              </InputContainer>
-            </Fieldset>
+            <Input label="Correo" type={"email"} {...getFieldProps("email")} />
+
+            <Input
+              {...getFieldProps("password")}
+              label="Contraseña"
+              type="password"
+            />
           </Stack>
         </Stack>
         <Flex css={{ justifyContent: "end" }}>
-          <Button>Continuar</Button>
+          <Button loading={loading}>Continuar</Button>
         </Flex>
       </Stack>
     </LoginContainer>

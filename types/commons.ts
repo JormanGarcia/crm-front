@@ -1,5 +1,6 @@
 import { QueryResult } from "@apollo/client";
 import { Column } from "react-table";
+import type * as Stitches from '@stitches/react';
 
 export interface DataTableProps<TVariables = any> {
     data: Readonly<any[]>;
@@ -10,3 +11,5 @@ export interface DataTableProps<TVariables = any> {
 }
 
 export type TableColumnsType = Column<any>[]
+
+export type StitchesComponent = { css?: Stitches.CSS }

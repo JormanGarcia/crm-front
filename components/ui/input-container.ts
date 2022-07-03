@@ -7,13 +7,13 @@ const InputContainer = styled("div", {
     display: "flex",
     alignItems: "center",
     outline: "0px solid #BCBBFF",
-    transition: ".1s outline",
+    transition: ".05s outline",
     overflow: "hidden",
 
 
     "&:focus-within": {
         border: "1px solid $main500",
-        outline: "3px solid #BCBBFF"
+        outline: "2px solid #BCBBFF"
     },
 
     variants: {

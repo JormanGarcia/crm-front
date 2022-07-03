@@ -25,12 +25,12 @@ export default function CreateCar() {
         <BackButton href={ROUTES.CARS}>{t("nav-title.cars")}</BackButton>
 
         <Button
-          withIcon
+          leftIcon={<BiPlus />}
           onClick={() => ref!.current!.submit()}
           variant="primary"
+          loading={loading}
         >
-          <BiPlus />
-          {loading ? "Creando..." : "Crear"}
+          Crear
         </Button>
       </PageHeader>
 

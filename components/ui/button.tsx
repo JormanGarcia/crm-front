@@ -1,7 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
+import { StitchesComponent } from "types/commons";
 import { styled } from "../../stitches.config";
+import LoadingSpinner from "./loading-spinner";
 
-const Button = styled("button", {
+const StyledButton = styled("button", {
   border: "none",
   fontWeight: 500,
   fontSize: "14px",
@@ -12,6 +14,22 @@ const Button = styled("button", {
   display: "flex",
   alignItems: "center",
   gap: 6,
+  position: "relative",
+  overflow: "hidden",
+
+  [`& ${LoadingSpinner}`]: {
+    borderColor: "white",
+    borderRightColor: "transparent",
+    height: 12,
+    width: 12,
+    borderWidth: 2,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    margin: "auto",
+  },
 
   "& svg": {
     fontSize: 16,
@@ -56,4 +74,38 @@ const Button = styled("button", {
     variant: "primary",
   },
 });
+
+const LoadingContainer = styled("div", {
+  background: "$main500",
+  width: "100%",
+  height: "100%",
+  position: "absolute",
+  left: 0,
+});
+
+interface Props extends StitchesComponent {
+  children: ReactNode;
+  loading?: boolean;
+  leftIcon?: ReactNode;
+  onClick?: () => void;
+  variant?: "primary" | "secondary";
+}
+
+const Button = (props: Props) => {
+  const { children, loading, leftIcon, variant = "primary", ...rest } = props;
+
+  return (
+    <StyledButton {...rest} withIcon={!!leftIcon} variant={variant}>
+      {leftIcon && leftIcon}
+
+      {loading && (
+        <LoadingContainer>
+          <LoadingSpinner />
+        </LoadingContainer>
+      )}
+      {children}
+    </StyledButton>
+  );
+};
+
 export default Button;

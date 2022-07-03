@@ -35,10 +35,7 @@ export default function Products() {
       <PageHeader>
         <PageHeaderTitle>{t("nav-title.cars")}</PageHeaderTitle>
         <Link href={ROUTES.CARS + "/create"}>
-          <Button withIcon>
-            <BiPlus />
-            Agregar Automovil
-          </Button>
+          <Button leftIcon={<BiPlus />}>Agregar Automovil</Button>
         </Link>
       </PageHeader>
 

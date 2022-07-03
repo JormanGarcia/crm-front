@@ -120,8 +120,12 @@ const AlertDialog = () => {
           </Button>
 
           <AlertDialogAction asChild>
-            <Button variant="primary" onClick={() => onConfirmAction()}>
-              {!loading ? "Borrar" : "Cargando..."}
+            <Button
+              variant="primary"
+              onClick={() => onConfirmAction()}
+              loading={loading}
+            >
+              Borrar
             </Button>
           </AlertDialogAction>
         </Flex>

@@ -1,6 +1,11 @@
 import useTranslation from "next-translate/useTranslation";
 import React, { useId, useState } from "react";
-import { BiChevronLeft, BiExit } from "react-icons/bi";
+import {
+  BiChevronLeft,
+  BiExit,
+  BiLogOut,
+  BiLogOutCircle,
+} from "react-icons/bi";
 import { useAuth } from "utils/hooks/use-auth";
 import useDisclousure from "utils/hooks/use-disclousure";
 import { styled } from "../../../stitches.config";
@@ -202,7 +207,7 @@ const Sidebar = () => {
         </ProfileContainer>
 
         <ProfileItem onClick={logout}>
-          <BiExit />
+          <BiLogOutCircle />
           <span>Cerrar Sesion</span>
         </ProfileItem>
       </ProfileDropdown>
