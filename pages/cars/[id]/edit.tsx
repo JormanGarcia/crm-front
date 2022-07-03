@@ -37,9 +37,12 @@ export default function EditCar() {
       <PageHeader>
         <BackButton href={ROUTES.CARS}>{t("nav-title.cars")}</BackButton>
 
-        <Button withIcon onClick={() => ref!.current!.submit()}>
-          <BiSave />
-          {loading ? "Guardando" : "Guardar"}
+        <Button
+          leftIcon={<BiPlus />}
+          onClick={() => ref!.current!.submit()}
+          loading={loading}
+        >
+          Guardar
         </Button>
       </PageHeader>
 
