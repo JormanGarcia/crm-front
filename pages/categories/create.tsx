@@ -46,10 +46,6 @@ export default function CreateCategory() {
           <Button variant="secondary" onClick={() => ref.current.reset()}>
             Clean
           </Button>
-          <Button withIcon onClick={() => ref!.current!.submit()}>
-            <BiPlus />
-            Save
-          </Button>
         </ButtonStack>
       </PageHeader>
 

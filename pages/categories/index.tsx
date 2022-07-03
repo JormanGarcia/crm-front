@@ -27,10 +27,7 @@ export default function Products() {
       <PageHeader>
         <PageHeaderTitle>{t("nav-title.categories")}</PageHeaderTitle>
         <Link href="/categories/create">
-          <Button withIcon>
-            <BiPlus />
-            Create Category
-          </Button>
+          <Button leftIcon={<BiPlus />}>Create Category</Button>
         </Link>
       </PageHeader>
 
