@@ -7,6 +7,7 @@ export const Container = styled("div", {
     padding: "12px 16px",
     cursor: "pointer",
     borderRadius: 4,
+    flexShrink: 0,
 
     variants: {
         active: {

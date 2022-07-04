@@ -102,7 +102,7 @@ interface Props {
 const ProfileDropdown = ({ isOpen, onToggle }: Props) => {
   const { user, logout } = useAuth();
 
-  const nameArray = user.name.split(" ").slice(0, 2);
+  const nameArray = user ? user.name.split(" ").slice(0, 2) : [];
 
   const initials = nameArray
     .map((item) => item.charAt(0))
