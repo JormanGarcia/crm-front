@@ -3,6 +3,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { styled } from "stitches.config";
 import { useAuth } from "utils/hooks/use-auth";
 import useDisclousure from "utils/hooks/use-disclousure";
+import Avatar from "../../avatar";
 
 const ProfileDropdownContainer = styled("div", {
   height: "78px",
@@ -43,6 +44,8 @@ const ProfileContainer = styled("div", {
   cursor: "pointer",
   width: "100%",
   transition: "0.2s",
+  padding: "0px 12px",
+  gap: 16,
   variants: {
     active: {
       true: {
@@ -61,7 +64,7 @@ const ProfileContainer = styled("div", {
 const ProfileInfo = styled("div", {
   display: "flex",
   flexDirection: "column",
-  padding: "16px 12px",
+  padding: "16px 0px",
   gap: 4,
 });
 
@@ -99,9 +102,17 @@ interface Props {
 const ProfileDropdown = ({ isOpen, onToggle }: Props) => {
   const { user, logout } = useAuth();
 
+  const nameArray = user.name.split(" ").slice(0, 2);
+
+  const initials = nameArray
+    .map((item) => item.charAt(0))
+    .join("")
+    .toUpperCase();
+
   return (
     <ProfileDropdownContainer open={isOpen}>
       <ProfileContainer onClick={onToggle} active={isOpen}>
+        <Avatar initials={initials ?? ""} />
         <ProfileInfo>
           {user !== null && <ProfileName>{user.name}</ProfileName>}
           <ProfileRole>admin</ProfileRole>

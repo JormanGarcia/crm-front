@@ -9,6 +9,7 @@ const DropdownContent = styled(DropdownMenu.Content, {
   background: "white",
   border: "1px solid $gray200",
   borderRadius: 4,
+  boxShadow: "0px 5px 10px rgba(0,0,0,0.05)",
 });
 
 const DropdownItem = styled(DropdownMenu.Item, {
@@ -16,8 +17,10 @@ const DropdownItem = styled(DropdownMenu.Item, {
   cursor: "default",
   "&:hover": {
     background: "$gray200",
+    color: "$text500",
+    outline: "none",
   },
-  color: "$text500",
+  color: "$text400",
   display: "flex",
   alignItems: "center",
   gap: 12,

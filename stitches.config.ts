@@ -7,6 +7,7 @@ export const { styled, getCssText, globalCss, keyframes, theme } = createStitche
             sans: "'DM Sans', sans-serif"
         },
         colors: {
+            main200: "#EBEBFF",
             main500: "#6663FD",
             main600: "#4946E7",
             main700: "#4D5B7D",
@@ -14,7 +15,7 @@ export const { styled, getCssText, globalCss, keyframes, theme } = createStitche
             main950: "#182135",
 
             gray200: "#F0F2F7",
-            gray300: "#B0B6C3",
+            gray300: "#D2D7E3",
             gray400: "#BAC0CF",
 
             text400: "#7D8AAA",

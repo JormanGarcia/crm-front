@@ -13,9 +13,8 @@ const IconButton = styled("button", {
     width: 30,
     height: 30,
     padding: -5,
-
-    "& svg": {
-
+    "&:focus": {
+        outline: "none",
     },
 
     variants: {
