@@ -46,6 +46,9 @@ const Login = () => {
         variables: {
           object: values,
         },
+        onError() {
+          alert("something went wrong");
+        },
       });
       console.log(data, values);
 

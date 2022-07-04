@@ -11,6 +11,7 @@ import useDisclousure from "utils/hooks/use-disclousure";
 import { styled } from "../../../stitches.config";
 import { NAV_ROUTES } from "../../../utils/nav-routes";
 import NavItem from "./nav-item";
+import ProfileDropdown from "./nav-item/profile-dropdown";
 
 const Container = styled("aside", {
   height: "100vh",
@@ -29,7 +30,7 @@ const Container = styled("aside", {
         width: 16,
       },
       true: {
-        width: 240,
+        width: 230,
       },
     },
   },
@@ -97,65 +98,6 @@ const SidebarToggleButtonContainer = styled("button", {
   },
 });
 
-const ProfileDropdown = styled("div", {
-  height: "78px",
-  display: "flex",
-  alignItems: "start",
-  borderTop: "1px solid $gray200",
-  position: "absolute",
-  bottom: 0,
-  width: "100%",
-  transition: "0.2s",
-  flexDirection: "column",
-  overflow: "hidden",
-  color: "$text500",
-  whiteSpace: "nowrap",
-
-  variants: {
-    open: {
-      true: {
-        height: "120px",
-      },
-      false: {
-        height: "78px",
-      },
-    },
-  },
-});
-
-const ProfileContainer = styled("div", {
-  height: "78px",
-  display: "flex",
-  alignItems: "center",
-  cursor: "pointer",
-  width: "100%",
-});
-
-const ProfileInfo = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  padding: 16,
-  gap: 4,
-});
-const ProfileItem = styled("div", {
-  display: "flex",
-  padding: "12px 16px",
-  width: "100%",
-  gap: 8,
-  alignItems: "center",
-  cursor: "default",
-  whiteSpace: "nowrap",
-  flexShrink: 0,
-
-  "&:hover": {
-    background: "$gray200",
-  },
-});
-
-const ProfileRole = styled("div", {
-  fontSize: "$sm",
-});
-
 const Sidebar = () => {
   const { t } = useTranslation("common");
   const { isOpen, toggle } = useDisclousure(true);
@@ -164,8 +106,6 @@ const Sidebar = () => {
     toggle: toggleProfile,
     close: closeProfile,
   } = useDisclousure(false);
-
-  const { user, logout } = useAuth();
 
   return (
     <Container open={isOpen}>
@@ -198,19 +138,8 @@ const Sidebar = () => {
           })}
         </SidebarNav>
       </ContainerHidden>
-      <ProfileDropdown open={isOpenProfile}>
-        <ProfileContainer onClick={toggleProfile}>
-          <ProfileInfo>
-            {user !== null && <div>{user.name}</div>}
-            <ProfileRole>admin</ProfileRole>
-          </ProfileInfo>
-        </ProfileContainer>
 
-        <ProfileItem onClick={logout}>
-          <BiLogOutCircle />
-          <span>Cerrar Sesion</span>
-        </ProfileItem>
-      </ProfileDropdown>
+      <ProfileDropdown isOpen={isOpenProfile} onToggle={toggleProfile} />
     </Container>
   );
 };
